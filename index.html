@@ -945,7 +945,13 @@
 <!-- White Enquiry Form Card with Glowing Focus Outlines & Touch Friendly Inputs -->
 <div class="lg:col-span-6 reveal">
 <div class="bg-white rounded-2xl p-5 sm:p-8 text-neutral-800 shadow-2xl border border-white/20">
-<form action="#" class="space-y-4" method="POST" onsubmit="event.preventDefault(); alert('Thank you. Your export inquiry has been received. Our sales desk will follow up shortly.');">
+<form action="https://api.web3forms.com/submit"
+      method="POST"
+      class="space-y-4">
+
+    <input type="hidden"
+           name="access_key"
+           value="5fab540a-9ebc-4091-84ae-e25dd8046184">
 <!-- Name & Country Row -->
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 <div>
