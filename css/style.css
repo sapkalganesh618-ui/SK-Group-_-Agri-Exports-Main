@@ -439,7 +439,7 @@ button {
 
 /* Crops the SK leaf mark out of the full logo image */
 .sk-logo-mark {
-  background: #efebe3 url("../assets/sk-group-logo.webp") no-repeat;
+  background: #efebe3 no-repeat;
   background-size: 183%;
   background-position: 51.7% 23.7%;
 }
@@ -447,7 +447,7 @@ button {
 .logo-img {
   width: 40px;
   height: 40px;
-  border-radius: 8px;
+  border-radius: 3px;
   box-shadow: var(--shadow-sm);
   transition: all 0.3s;
 }
