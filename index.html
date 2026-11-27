@@ -14,11 +14,15 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <!-- Our styles -->
 <link href="css/style.css" rel="stylesheet"/>
+<link href="css/header.css" rel="stylesheet"/>
+<link href="css/loader.css" rel="stylesheet"/>
 <!-- Google Tag Manager -->
 <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-5KZ52S5S"></script>
 <script src="js/analytics.js"></script>
 </head>
 <body>
+<!-- Loading screen: must stay the first thing in <body> -->
+<script src="js/loader.js"></script>
 
 <!-- ================= TOP BAR ================= -->
 <div class="top-bar">
@@ -44,44 +48,41 @@
 </div>
 
 <!-- ================= HEADER ================= -->
-<header class="site-header">
-  <div class="container header-inner">
-    <!-- Logo -->
-    <a class="logo" href="#">
-      <img class="logo-img sk-logo-mark" src="assets/sk logo.png" alt="SK Group logo">
+<!-- Same header as products.html — styles in css/header.css, behaviour in js/header.js -->
+<header class="skh">
+  <div class="skh-inner">
+    <a class="skh-logo" href="index.html" aria-label="SK Group home">
+      <img src="assets/sk-group-logo.svg" alt="SK Group" width="52" height="52">
     </a>
 
-    <!-- Desktop menu -->
-    <nav class="main-nav">
-      <a class="nav-link" href="#about">About</a>
-      <a class="nav-link" href="#products">Products</a>
-      <a class="nav-link" href="#process">Process</a>
-      <a class="nav-link" href="#why-us">Why Us</a>
-      <a class="nav-link" href="#compliance">Quality</a>
-      <a class="nav-link" href="#faq">FAQ</a>
-      <a class="nav-link" href="#inquiry">Contact</a>
+    <nav class="skh-nav" aria-label="Main">
+      <a class="skh-link" href="products.html">Products</a>
+      <a class="skh-link" href="#process" data-section="process">Export Process</a>
+      <a class="skh-link" href="#packing" data-section="packing">Process</a>
+      <a class="skh-link" href="#compliance" data-section="compliance">Quality &amp; Certifications</a>
+      <a class="skh-link" href="#why-us" data-section="why-us">Export Markets</a>
+      <a class="skh-link" href="#inquiry" data-section="inquiry">Contact</a>
+      <a class="skh-link" href="#about" data-section="about">About</a>
     </nav>
 
-    <!-- Quote button + mobile menu button -->
-    <div class="header-actions">
-      <a class="btn btn-primary header-quote-btn" href="#inquiry">Request a Quote</a>
-      <button class="menu-toggle" id="mobile-menu-btn" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu">
-        <i data-lucide="menu"></i>
-      </button>
+    <div class="skh-actions">
+      <a class="skh-quote" href="#inquiry">Request a Quote</a>
+      <button class="skh-toggle" type="button" aria-controls="skh-menu" aria-expanded="false" aria-label="Open menu"><span></span></button>
     </div>
   </div>
 
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobile-menu">
-    <a class="mobile-menu-link" href="#about">About</a>
-    <a class="mobile-menu-link" href="#products">Products</a>
-    <a class="mobile-menu-link" href="#process">Process</a>
-    <a class="mobile-menu-link" href="#why-us">Why Us</a>
-    <a class="mobile-menu-link" href="#compliance">Quality</a>
-    <a class="mobile-menu-link" href="#faq">FAQ</a>
-    <a class="mobile-menu-link" href="#inquiry">Contact</a>
-    <div class="mobile-menu-footer">
-      <a class="btn btn-primary btn-block" href="#inquiry">Request a Quote</a>
+  <div class="skh-menu" id="skh-menu">
+    <div>
+      <nav class="skh-menu-inner" aria-label="Mobile">
+        <a class="skh-menu-link" href="products.html">Products</a>
+        <a class="skh-menu-link" href="#process" data-section="process">Export Process</a>
+        <a class="skh-menu-link" href="#packing" data-section="packing">Process</a>
+        <a class="skh-menu-link" href="#compliance" data-section="compliance">Quality &amp; Certifications</a>
+        <a class="skh-menu-link" href="#why-us" data-section="why-us">Export Markets</a>
+        <a class="skh-menu-link" href="#inquiry" data-section="inquiry">Contact</a>
+        <a class="skh-menu-link" href="#about" data-section="about">About</a>
+        <a class="skh-quote" href="#inquiry">Request a Quote</a>
+      </nav>
     </div>
   </div>
 </header>
@@ -374,7 +375,7 @@
 </section>
 
 <!-- ================= PACKING & SHIPPING ================= -->
-<section class="section section-cream">
+<section class="section section-cream" id="packing">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-label">Packing &amp; Shipping</span>
@@ -667,5 +668,11 @@
 
 <!-- Page interactions (menu, filters, scroll effects) -->
 <script src="js/main.js"></script>
+<script src="js/header.js"></script>
+<!-- Animations: GSAP + ScrollTrigger + SplitText -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="js/animations.js"></script>
 </body>
 </html>

@@ -14,6 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="css/header.css" rel="stylesheet"/>
+<link href="css/loader.css" rel="stylesheet"/>
 <script>
   tailwind.config = {
     theme: {
@@ -51,6 +53,8 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { scrollbar-width: none; }
   .cat-section { scroll-margin-top: 150px; }
+  /* Sits right under the header, and slides up to the top when the header hides */
+  .cat-bar-sticky { position: sticky; top: var(--skh-offset); transition: top 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
   @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
     .reveal { opacity: 1 !important; transform: none !important; }
@@ -64,42 +68,46 @@
   gtag('js', new Date());
 </script>
 <body class="bg-brand-cream text-neutral-800 antialiased selection:bg-brand-forest selection:text-white">
+<!-- Loading screen: must stay the first thing in <body> -->
+<script src="js/loader.js"></script>
 
-<!-- Header -->
-<header class="sticky top-0 z-50 bg-brand-cream/95 backdrop-blur-md border-b border-brand-border">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 py-3 flex items-center justify-between">
-<a class="flex items-center gap-2.5 sm:gap-3 group" href="index.html">
-<img alt="SK Group logo" class="sk-logo-mark [--logo-size:40px] sm:[--logo-size:48px] w-10 h-10 sm:w-12 sm:h-12 rounded-lg shadow-sm group-hover:scale-105 transition-all duration-300" src="assets/sk logo.png">
-<span class="text-lg sm:text-xl font-bold tracking-tight text-brand-dark leading-none">SK GROUP</span>
-</a>
-<nav class="hidden lg:flex items-center gap-7 xl:gap-8 text-[14px] font-medium text-stone-700">
-<a class="nav-link hover:text-brand-forest" href="index.html#about">About</a>
-<a class="nav-link is-active text-brand-forest" href="products.html">Products</a>
-<a class="nav-link hover:text-brand-forest" href="index.html#process">Process</a>
-<a class="nav-link hover:text-brand-forest" href="index.html#why-us">Why Us</a>
-<a class="nav-link hover:text-brand-forest" href="index.html#compliance">Quality</a>
-<a class="nav-link hover:text-brand-forest" href="index.html#faq">FAQ</a>
-<a class="nav-link hover:text-brand-forest" href="index.html#inquiry">Contact</a>
-</nav>
-<div class="flex items-center gap-3">
-<a class="hidden sm:inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-md text-sm font-semibold btn-gradient-forest text-white shadow-sm" href="index.html#inquiry">Request a Quote</a>
-<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu" class="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-lg text-stone-700 hover:bg-stone-100" id="mobile-menu-btn" type="button">
-<i class="w-6 h-6" data-lucide="menu"></i>
-</button>
-</div>
-</div>
-<div class="hidden lg:hidden border-b border-brand-border bg-brand-cream px-4 sm:px-6 pt-3 pb-6 space-y-1 shadow-lg" id="mobile-menu">
-<a class="flex items-center min-h-[44px] px-3 rounded-md text-base font-semibold text-stone-800 hover:bg-brand-lightSage/60" href="index.html#about">About</a>
-<a class="flex items-center min-h-[44px] px-3 rounded-md text-base font-semibold text-brand-forest bg-brand-lightSage/60" href="products.html">Products</a>
-<a class="flex items-center min-h-[44px] px-3 rounded-md text-base font-semibold text-stone-800 hover:bg-brand-lightSage/60" href="index.html#process">Process</a>
-<a class="flex items-center min-h-[44px] px-3 rounded-md text-base font-semibold text-stone-800 hover:bg-brand-lightSage/60" href="index.html#why-us">Why Us</a>
-<a class="flex items-center min-h-[44px] px-3 rounded-md text-base font-semibold text-stone-800 hover:bg-brand-lightSage/60" href="index.html#compliance">Quality</a>
-<a class="flex items-center min-h-[44px] px-3 rounded-md text-base font-semibold text-stone-800 hover:bg-brand-lightSage/60" href="index.html#faq">FAQ</a>
-<a class="flex items-center min-h-[44px] px-3 rounded-md text-base font-semibold text-stone-800 hover:bg-brand-lightSage/60" href="index.html#inquiry">Contact</a>
-<div class="pt-3">
-<a class="flex items-center justify-center min-h-[44px] w-full px-4 py-3 rounded-lg btn-gradient-forest text-white font-semibold" href="index.html#inquiry">Request a Quote</a>
-</div>
-</div>
+<!-- Same header as index.html — styles in css/header.css, behaviour in js/header.js -->
+<header class="skh">
+  <div class="skh-inner">
+    <a class="skh-logo" href="index.html" aria-label="SK Group home">
+      <img src="assets/sk-group-logo.svg" alt="SK Group" width="52" height="52">
+    </a>
+
+    <nav class="skh-nav" aria-label="Main">
+      <a class="skh-link is-active" href="products.html" aria-current="page">Products</a>
+      <a class="skh-link" href="index.html#process">Export Process</a>
+      <a class="skh-link" href="index.html#packing">Process</a>
+      <a class="skh-link" href="index.html#compliance">Quality &amp; Certifications</a>
+      <a class="skh-link" href="index.html#why-us">Export Markets</a>
+      <a class="skh-link" href="index.html#inquiry">Contact</a>
+      <a class="skh-link" href="index.html#about">About</a>
+    </nav>
+
+    <div class="skh-actions">
+      <a class="skh-quote" href="index.html#inquiry">Request a Quote</a>
+      <button class="skh-toggle" type="button" aria-controls="skh-menu" aria-expanded="false" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+
+  <div class="skh-menu" id="skh-menu">
+    <div>
+      <nav class="skh-menu-inner" aria-label="Mobile">
+        <a class="skh-menu-link is-active" href="products.html" aria-current="page">Products</a>
+        <a class="skh-menu-link" href="index.html#process">Export Process</a>
+        <a class="skh-menu-link" href="index.html#packing">Process</a>
+        <a class="skh-menu-link" href="index.html#compliance">Quality &amp; Certifications</a>
+        <a class="skh-menu-link" href="index.html#why-us">Export Markets</a>
+        <a class="skh-menu-link" href="index.html#inquiry">Contact</a>
+        <a class="skh-menu-link" href="index.html#about">About</a>
+        <a class="skh-quote" href="index.html#inquiry">Request a Quote</a>
+      </nav>
+    </div>
+  </div>
 </header>
 
 <main>
@@ -121,7 +129,7 @@
 </section>
 
 <!-- Sticky category bar -->
-<div class="sticky top-[72px] sm:top-20 z-40 bg-brand-cream/95 backdrop-blur-md border-b border-brand-border">
+<div class="cat-bar-sticky z-40 bg-brand-cream/95 backdrop-blur-md border-b border-brand-border">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-3" id="cat-bar" role="tablist" aria-label="Product categories"></div>
 </div>
@@ -378,12 +386,20 @@
         bar.scrollTo({ left: p.offsetLeft - (bar.clientWidth - p.offsetWidth) / 2, behavior: 'smooth' });
       }
     });
-    history.replaceState(null, '', id === 'all' ? location.pathname : '#' + id);
+    // Keep any ?query (e.g. utm_ campaign tags) when updating the #category
+    history.replaceState(null, '', location.pathname + location.search + (id === 'all' ? '' : '#' + id));
     if (scroll) {
       const target = id === 'all' ? document.getElementById('catalogue') : document.getElementById(id);
-      const offset = document.querySelector('header').offsetHeight + document.getElementById('cat-bar').parentElement.offsetHeight + 16;
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: scroll === 'instant' ? 'instant' : 'smooth' });
+      const barH = document.getElementById('cat-bar').parentElement.parentElement.offsetHeight;
+      const targetY = target.getBoundingClientRect().top + window.scrollY;
+      // The header hides while scrolling down, so only leave room for it when scrolling up
+      const goingDown = targetY - barH - 16 > window.scrollY;
+      const headerH = goingDown ? 0 : document.querySelector('.skh').offsetHeight;
+      if (window.SKHeader) goingDown ? window.SKHeader.hide() : window.SKHeader.show();
+      window.scrollTo({ top: targetY - barH - headerH - 16, behavior: scroll === 'instant' ? 'instant' : 'smooth' });
     }
+    // Sections were shown/hidden, so scroll animations need new positions
+    if (window.ScrollTrigger) requestAnimationFrame(() => window.ScrollTrigger.refresh());
     // Reveal anything that became visible
     document.querySelectorAll('.cat-section:not([style*="none"]) .reveal').forEach(el => observer && observer.observe(el));
   }
@@ -412,16 +428,12 @@
     showCategory(initial, false);
     if (initial !== 'all') setTimeout(() => showCategory(initial, 'instant'), 60);
     window.addEventListener('hashchange', () => showCategory(location.hash.replace('#', '') || 'all', true));
-
-    // Mobile menu
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    btn.addEventListener('click', () => {
-      const open = menu.classList.toggle('hidden') === false;
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btn.innerHTML = `<i class="w-6 h-6" data-lucide="${open ? 'x' : 'menu'}"></i>`;
-      if (window.lucide) window.lucide.createIcons();
-    });
   });
 </script>
+<script src="js/header.js"></script>
+<!-- Animations: GSAP + ScrollTrigger + SplitText -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="js/animations.js"></script>
 </body></html>

@@ -1,0 +1,197 @@
+/* =========================================================
+   Shared site header (Figma "main" frame, node 48:15801)
+   Used by index.html and products.html. Class names are
+   prefixed "skh-" so they never clash with style.css or Tailwind.
+   ========================================================= */
+
+:root {
+  --skh-height: 78px;          /* Figma: 78px tall */
+  --skh-ink: #000000;          /* active link */
+  --skh-muted: #6b675f;        /* other links */
+  --skh-green-1: #184c31;      /* button gradient start */
+  --skh-green-2: #103420;      /* button gradient end */
+  --skh-offset: var(--skh-height); /* how much of the top the header covers; JS sets 0 when hidden */
+}
+
+.skh {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: #ffffff;
+  border-bottom: 1px solid transparent;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+/* Hidden while scrolling down, slides back in from the top on scroll up */
+.skh.is-hidden { transform: translateY(-105%); }
+/* Once the page is scrolled, lift the header off the content */
+.skh.is-scrolled {
+  border-bottom-color: #ece8e0;
+  box-shadow: 0 6px 24px -12px rgba(13, 40, 24, 0.18);
+}
+
+.skh-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: var(--skh-height);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Logo (58 × 58 in Figma) */
+.skh-logo { display: inline-flex; flex-shrink: 0; border-radius: 4px; }
+.skh-logo img { width: 52px; height: 52px; display: block; transition: transform 0.3s ease; }
+.skh-logo:hover img { transform: scale(1.06) rotate(-2deg); }
+
+/* Desktop navigation: 18px Plus Jakarta Sans, 20px gap */
+.skh-nav { display: none; align-items: center; gap: 20px; }
+.skh-link {
+  position: relative;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: var(--skh-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+.skh-link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 1px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.skh-link:hover { color: var(--skh-ink); }
+.skh-link:hover::after { transform: scaleX(1); transform-origin: left; }
+.skh-link.is-active { color: var(--skh-ink); }
+.skh-link.is-active::after { transform: scaleX(1); }
+
+.skh-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+
+/* "Request a Quote": 14px SemiBold, 10/20 padding, 6px radius, green gradient */
+.skh-quote {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--skh-green-1) 0%, var(--skh-green-2) 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.skh-quote::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -60%;
+  width: 40%; height: 200%;
+  background: linear-gradient(60deg, rgba(255,255,255,0) 10%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 90%);
+  transform: rotate(25deg);
+  transition: left 0.75s ease;
+}
+.skh-quote:hover::after { left: 130%; }
+.skh-quote:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(19, 62, 38, 0.45), 0 0 15px 2px rgba(197, 155, 39, 0.25);
+}
+.skh-quote:active { transform: scale(0.98); }
+
+/* Mobile menu button */
+.skh-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #1f2937;
+  cursor: pointer;
+}
+.skh-toggle:hover { background: #f3f1ec; }
+.skh-toggle span,
+.skh-toggle span::before,
+.skh-toggle span::after {
+  display: block;
+  width: 22px; height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  position: relative;
+  transition: transform 0.3s ease, background 0.2s ease;
+}
+.skh-toggle span::before, .skh-toggle span::after { content: ''; position: absolute; left: 0; }
+.skh-toggle span::before { top: -7px; }
+.skh-toggle span::after { top: 7px; }
+.skh-toggle[aria-expanded="true"] span { background: transparent; }
+.skh-toggle[aria-expanded="true"] span::before { transform: translateY(7px) rotate(45deg); }
+.skh-toggle[aria-expanded="true"] span::after { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu panel */
+.skh-menu {
+  display: grid;
+  grid-template-rows: 0fr;
+  background: #ffffff;
+  border-top: 1px solid transparent;
+  transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+}
+.skh-menu > div { overflow: hidden; }
+.skh-menu.is-open { grid-template-rows: 1fr; border-top-color: #ece8e0; box-shadow: 0 16px 30px -16px rgba(13, 40, 24, 0.25); }
+.skh-menu-inner { padding: 8px 16px 20px; display: flex; flex-direction: column; gap: 2px; }
+.skh-menu-link {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 17px;
+  color: var(--skh-muted);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.skh-menu-link:hover, .skh-menu-link.is-active { background: #f3f1ec; color: var(--skh-ink); }
+.skh-menu .skh-quote { display: flex; margin-top: 12px; padding: 13px 20px; font-size: 15px; }
+
+@media (min-width: 640px) {
+  .skh-inner { padding: 10px 24px; }
+  .skh-quote { display: inline-flex; }
+}
+
+/* Desktop: show the full nav. Text steps down so all 7 links fit. */
+@media (min-width: 1100px) {
+  /* Figma: links start 150px after the logo; scales down on narrower screens */
+  .skh-nav { display: flex; gap: 14px; margin-left: clamp(0px, calc((100vw - 1100px) * 0.4), 126px); } /* + 24px flex gap = 150px */
+  .skh-link { font-size: 15px; }
+  .skh-toggle, .skh-menu { display: none; }
+}
+@media (min-width: 1280px) {
+  .skh-nav { gap: 18px; }
+  .skh-link { font-size: 16px; }
+}
+@media (min-width: 1400px) {
+  .skh-inner { padding: 10px 10px; }
+  .skh-nav { gap: 20px; }
+  .skh-link { font-size: 18px; }
+}
+
+/* Anchored sections stop below the header */
+section[id], .cat-section { scroll-margin-top: calc(var(--skh-height) + 16px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .skh, .skh-link::after, .skh-menu { transition: none; }
+}

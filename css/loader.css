@@ -1,0 +1,119 @@
+/* =========================================================
+   Page loader: SK logo builds itself, a progress line fills,
+   then a dark green panel sweeps across to reveal the page.
+   Markup is added by js/loader.js. Used by index.html + products.html.
+   ========================================================= */
+
+/* Only while loading (js/loader.js adds .skl-on to <html>) */
+html.skl-on { overflow: hidden; }
+
+.skl {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  /* Safety net: if anything goes wrong, never block the page for more than 8s */
+  animation: skl-failsafe 0s linear 8s forwards;
+}
+@keyframes skl-failsafe { to { visibility: hidden; opacity: 0; pointer-events: none; } }
+
+.skl-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  transition: opacity 0.25s ease;
+}
+
+/* ---- Logo (Figma "SK Group Logo", node 16:2182) ---- */
+.skl-logo { width: 112px; height: auto; overflow: visible; }
+@media (min-width: 768px) { .skl-logo { width: 132px; } }
+
+/* 1. SK mark: outline draws in, then fills */
+.skl-mark {
+  fill: #062C13;
+  fill-opacity: 0;
+  stroke: #062C13;
+  stroke-width: 1.4;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: skl-draw 1s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards,
+             skl-fill 0.5s ease 0.85s forwards;
+}
+@keyframes skl-draw { to { stroke-dashoffset: 0; } }
+@keyframes skl-fill { to { fill-opacity: 1; stroke-width: 0; } }
+
+/* 2. Leaf grows out of the stem */
+.skl-leaf {
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+  transform: scale(0) rotate(-35deg);
+  animation: skl-leaf 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s forwards;
+}
+@keyframes skl-leaf { to { transform: scale(1) rotate(0deg); } }
+
+/* 3. "SK GROUP" wipes in from the left */
+.skl-word {
+  clip-path: inset(0 100% 0 0);
+  transform: translateY(6px);
+  animation: skl-word 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.15s forwards;
+}
+@keyframes skl-word { to { clip-path: inset(0 0 0 0); transform: translateY(0); } }
+
+/* ---- Progress line (as in the recording) ---- */
+.skl-track {
+  width: 160px;
+  height: 4px;
+  border-radius: 999px;
+  background: #efe9de;
+  overflow: hidden;
+}
+.skl-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+  background: #285D18;
+  transform: scaleX(0.04);
+  transform-origin: 0 50%;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---- Dark green sweep ---- */
+.skl-panel {
+  position: absolute;
+  inset: 0;
+  background: #0A2B16;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.skl.is-covering .skl-panel { transform: scaleX(1); }                          /* sweeps in from the left */
+.skl.is-covered { background: transparent; }
+.skl.is-covered .skl-stage { opacity: 0; }
+.skl.is-revealing .skl-panel { transform: scaleX(0); transform-origin: 100% 50%; } /* leaves to the right */
+
+/* Quick version for the 2nd+ page in a visit: starts covered, just sweeps away */
+.skl.is-quick { background: transparent; }
+.skl.is-quick .skl-stage { display: none; }
+.skl.is-quick .skl-panel { transform: scaleX(1); transition: none; }
+.skl.is-quick.is-revealing .skl-panel { transform: scaleX(0); transform-origin: 100% 50%; transition: transform 0.55s cubic-bezier(0.76, 0, 0.24, 1); }
+
+/* Reduced motion: static logo, then a simple fade.
+   (.is-force = the ?motion=full preview, which keeps the full animation) */
+@media (prefers-reduced-motion: reduce) {
+  .skl:not(.is-force) .skl-mark,
+  .skl:not(.is-force) .skl-leaf,
+  .skl:not(.is-force) .skl-word { animation: none; fill-opacity: 1; stroke-width: 0; transform: none; clip-path: none; }
+  .skl:not(.is-force) .skl-panel { display: none; }
+  .skl:not(.is-force) { transition: opacity 0.3s ease; }
+  .skl:not(.is-force).is-revealing { opacity: 0; }
+  /* style.css/products.html shorten every transition when motion is reduced; undo that for the preview */
+  .skl.is-force .skl-panel { transition-duration: 0.55s !important; }
+  .skl.is-force .skl-mark { animation-duration: 1s, 0.5s !important; }
+  .skl.is-force .skl-leaf { animation-duration: 0.7s !important; }
+  .skl.is-force .skl-word { animation-duration: 0.6s !important; }
+  .skl.is-force .skl-fill { transition-duration: 0.35s !important; }
+}
